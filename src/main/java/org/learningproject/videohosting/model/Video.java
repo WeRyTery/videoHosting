@@ -17,9 +17,6 @@ public class Video {
 
     private String contentType;
 
-    @JsonIgnore
-    private byte[] data;
-
     public Video() {
     }
 
@@ -50,13 +47,5 @@ public class Video {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
-    }
-
-    public byte[] getData() {
-        return data;
-    }
-
-    public void setData(byte[] data) {
-        this.data = data;
     }
 }

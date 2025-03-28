@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Воспроизведение видео</title>
+    <script>
+        // Функция для загрузки списка видео при загрузке страницы
+        window.onload = function() {
+            fetch('/videos')
+                .then(response => response.json())
+                .then(data => {
+                    const videoSelect = document.getElementById('videoFile');
+                    data.forEach(video => {
+                        const option = document.createElement('option');
+                        option.value = video.fileName; // Убедитесь, что поле называется fileName
+                        option.textContent = video.fileName;
+                        videoSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Ошибка при загрузке списка видео:', error));
+        };
+
+        // Функция для обновления источника видео
+        function updateVideoSource() {
+            const videoSelect = document.getElementById('videoFile');
+            const selectedFileName = videoSelect.value;
+            const videoSource = document.getElementById('videoSource');
+            videoSource.src = '/video/' + selectedFileName;
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.load(); // Перезагружаем видео
+            videoPlayer.play(); // Автоматически воспроизводим
+        }
+    </script>
+</head>
+<body>
+<h1>Воспроизведение видео</h1>
+<label for="videoFile">Выберите видео:</label>
+<select id="videoFile" onchange="updateVideoSource()">
+    <option value="">-- Выберите видео --</option>
+    <!-- Опции будут добавлены динамически с помощью JavaScript -->
+</select>
+
+<h2>Воспроизведение видео:</h2>
+<video id="videoPlayer" width="600" controls>
+    <source id="videoSource" src="" type="video/mp4">
+    Ваш браузер не поддерживает видео.
+</video>
+</body>
+</html>
