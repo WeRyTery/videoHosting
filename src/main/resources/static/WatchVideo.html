@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <style>
+        video {
+            position: absolute;
+            top: -200px;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            margin: auto;
+            min-height: 50%;
+            min-width: 50%;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video player</title>
+    <script>
+        // Функция для загрузки списка видео при загрузке страницы
+        window.onload = function() {
+            fetch('/videos')
+                .then(response => response.json())
+                .then(data => {
+                    const videoSelect = document.getElementById('videoFile');
+                    data.forEach(video => {
+                        const option = document.createElement('option');
+                        option.value = video.fileName; // Убедитесь, что поле называется fileName
+                        option.textContent = video.fileName;
+                        videoSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error loading video from the list:', error));
+        };
+
+        // Функция для обновления источника видео
+        function updateVideoSource() {
+            const videoSelect = document.getElementById('videoFile');
+            const selectedFileName = videoSelect.value;
+            const videoSource = document.getElementById('videoSource');
+            videoSource.src = '/video/' + selectedFileName;
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.load(); // Перезагружаем видео
+            videoPlayer.play(); // Автоматически воспроизводим
+        }
+    </script>
+</head>
+<body>
+<h1>Play video</h1>
+<label for="videoFile">Select video:</label>
+<select id="videoFile" onchange="updateVideoSource()">
+    <option value="">-- Select video --</option>
+    <!-- Опции будут добавлены динамически с помощью JavaScript -->
+</select>
+
+<h2>Play video:</h2>
+<video id="videoPlayer" width="800" controls>
+    <source id="videoSource" src="" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+</body>
+</html>

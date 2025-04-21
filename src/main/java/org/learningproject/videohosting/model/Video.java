@@ -3,22 +3,17 @@ package org.learningproject.videohosting.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import org.springframework.data.annotation.Id;
 
 @Entity
 public class Video {
-    @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty
+    @Column(nullable = false, updatable = false, unique = true)
     private String fileName;
 
     private String contentType;
-
-    @JsonIgnore
-    private byte[] data;
 
     public Video() {
     }
@@ -50,13 +45,5 @@ public class Video {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
-    }
-
-    public byte[] getData() {
-        return data;
-    }
-
-    public void setData(byte[] data) {
-        this.data = data;
     }
 }
