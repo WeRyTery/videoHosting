@@ -31,7 +31,6 @@ public class VideoViewController {
             File file = new File(videoStoragePath + "/" + fileName);
             Resource resource = resourceLoader.getResource("file:" + file.getAbsolutePath());
 
-            // Определяем тип содержимого файла
             String contentType = Files.probeContentType(file.toPath());
             MediaType mediaType = MediaType.parseMediaType(contentType != null ? contentType : "application/octet-stream");
 

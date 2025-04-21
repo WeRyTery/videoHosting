@@ -1,6 +1,5 @@
 package org.learningproject.videohosting.controller;
 
-import org.learningproject.videohosting.model.Video;
 import org.learningproject.videohosting.service.VideoService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,7 +30,7 @@ public class VideoUploadController {
             }
 
             file.transferTo(new File(UPLOAD_DIR + file.getOriginalFilename()));
-            videoService.saveVideo(file.getOriginalFilename(), file.getContentType());
+            videoService.save(file.getOriginalFilename(), file.getContentType());
             return "Saving was successful";
         } catch (IOException e) {
             e.printStackTrace();

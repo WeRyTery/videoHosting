@@ -12,7 +12,7 @@ public class VideoService {
         this.videoRepository = videoRepository;
     }
 
-    public Video saveVideo(String fileName, String contentType) {
+    public Video save(String fileName, String contentType) {
         Video video = new Video();
 
         video.setFileName(fileName);
